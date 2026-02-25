@@ -1,0 +1,199 @@
+<!-- 
+README:
+This file implements a Browser Environment Dashboard.
+It demonstrates the use of:
+- navigator object (browser details)
+- screen object (display information)
+- document object (page title manipulation)
+- location object (URL handling and redirection)
+- history object (navigation controls)
+- window object (resize events)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Environment Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            transition: background-color 0.4s ease;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+        }
+
+        .profile-panel {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #1abc9c;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .button {
+            padding: 10px 15px;
+            margin: 8px 5px 0 0;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1abc9c;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="profile-panel">
+        <h1>Student Profile Information</h1>
+        <p><strong>Complete Name:</strong> Pedro L. De Alday Jr.</p>
+        <p><strong>Sex:</strong> Male</p>
+        <p><strong>Address:</strong> Zone 2, Lidong, Hibago, Ocampo, Camarines Sur, 4419</p>
+        <p><strong>Course, Year, Section:</strong> BSIT - 2rd Year - D</p>
+        <p><strong>Name of School:</strong> Partido State University</p>
+        <p><strong>Semester and Academic Year:</strong> 2nd Semester, AY 2025-2026</p>
+        <p><strong>Subject Code and Title:</strong> PF2 - Event-Driven Programming</p>
+        <p><strong>Name of Subject Instructor:</strong> Arjay F. Abio, MIT, LPT (Assistant Professor II)</p>
+    </div>
+</header>
+
+<section>
+    <h2>Part A: Browser Information</h2>
+    <table>
+        <tr><td>Browser Name & Version</td><td id="browserInfo"></td></tr>
+        <tr><td>Platform</td><td id="platform"></td></tr>
+        <tr><td>Java Enabled</td><td id="javaEnabled"></td></tr>
+        <tr><td>Screen Resolution</td><td id="resolution"></td></tr>
+        <tr><td>Available Screen Size</td><td id="availableSize"></td></tr>
+        <tr><td>Color Depth</td><td id="colorDepth"></td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>Part B: Page Information and Controls</h2>
+    <p><strong>Current URL:</strong> <span id="currentURL"></span></p>
+    <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+    <p><strong>Current Page Title:</strong> <span id="currentTitle"></span></p>
+    <button class="button" onclick="changeTitle()">Change Page Title</button>
+</section>
+
+<section>
+    <h2>Navigation Controls</h2>
+    <button class="button" onclick="reloadPage()">Reload Page</button>
+    <button class="button" onclick="redirectPage()">Redirect to Landing Page</button>
+    <button class="button" onclick="goBack()">Go Back</button>
+    <button class="button" onclick="goForward()">Go Forward</button>
+</section>
+
+<script>
+    /* ========== Part A: Browser & Screen Information ========== */
+
+    // Using navigator object to retrieve browser details
+    document.getElementById("browserInfo").textContent = navigator.userAgent;
+    document.getElementById("platform").textContent = navigator.platform;
+    document.getElementById("javaEnabled").textContent = navigator.javaEnabled();
+
+    // Using screen object to retrieve display information
+    document.getElementById("resolution").textContent = screen.width + " x " + screen.height;
+    document.getElementById("availableSize").textContent = screen.availWidth + " x " + screen.availHeight;
+    document.getElementById("colorDepth").textContent = screen.colorDepth + " bit";
+
+
+    /* ========== Part B: Page Information ========== */
+
+    // Using location object to display URL information
+    document.getElementById("currentURL").textContent = window.location.href;
+    document.getElementById("hostname").textContent = window.location.hostname;
+
+    // Using document object to retrieve page title
+    document.getElementById("currentTitle").textContent = document.title;
+
+    function changeTitle() {
+        // Prompt user for new title
+        const newTitle = prompt("Enter new page title:");
+
+        // Update the document title dynamically
+        if (newTitle) {
+            document.title = newTitle;
+            document.getElementById("currentTitle").textContent = newTitle;
+        }
+    }
+
+
+    /* ========== Part C: Navigation Controls ========== */
+
+    function reloadPage() {
+        location.reload();
+    }
+
+    function redirectPage() {
+        location.href = "index.html";
+    }
+
+    function goBack() {
+        history.back();
+    }
+
+    function goForward() {
+        history.forward();
+    }
+
+
+    /* ========== Part D: Dynamic Background Based on Screen Width ========== */
+
+    function updateBackgroundColor() {
+        const width = window.innerWidth;
+
+        // Change background color depending on screen width
+        if (width < 600) {
+            document.body.style.backgroundColor = "blue";
+        } else if (width >= 600 && width <= 991) {
+            document.body.style.backgroundColor = "green";
+        } else {
+            document.body.style.backgroundColor = "orange";
+        }
+    }
+
+    // Run on page load
+    window.addEventListener("load", updateBackgroundColor);
+
+    // Run whenever window is resized
+    window.addEventListener("resize", updateBackgroundColor);
+
+</script>
+
+</body>
+</html>
